@@ -1,22 +1,75 @@
-import BaseService from "./BaseService.js";
-import LessonRepository from "../repositories/LessonRepository.js";
+import db from "../db/index.js";
+import { eq, asc, and, inArray } from "drizzle-orm";
+import * as schema from "../db/schema.js";
 
-class LessonService extends BaseService {
-  constructor() {
-    super(new LessonRepository());
-  }
+const getAllLessons = async () => {
+  const lessons = await db.query.lessons.findMany({
+    orderBy: [asc(schema.lessons.order)],
+    with: {
+      challenges: {
+        orderBy: [asc(schema.challenges.order)],
+      },
+    },
+  });
+  return lessons;
+};
 
-  async getLessonsByUnitId(unitId) {
-    return await this.repository.getLessonsByUnitId(unitId);
-  }
+const getLessonById = async (id) => {
+  const lesson = await db.query.lessons.findFirst({
+    where: eq(schema.lessons.id, id),
+    with: {
+      challenges: {
+        orderBy: [asc(schema.challenges.order)],
+      },
+    },
+  });
+  return lesson;
+};
 
-  async getLessonWithChallenges(id) {
-    const lesson = await this.repository.getLessonWithChallenges(id);
-    if (!lesson) {
-      throw new Error("Lesson not found");
-    }
-    return lesson;
-  }
-}
+const createLesson = async (lesson) => {
+  const newLesson = await db.insert(schema.lessons).values(lesson).returning();
+  return newLesson;
+};
 
-export default LessonService;
+const updateLesson = async (id, lesson) => {
+  const updatedLesson = await db
+    .update(schema.lessons)
+    .set(lesson)
+    .where(eq(schema.lessons.id, id))
+    .returning();
+  return updatedLesson;
+};
+
+const deleteLesson = async (id) => {
+  const deletedLesson = await db
+    .delete(schema.lessons)
+    .where(eq(schema.lessons.id, id))
+    .returning();
+  return deletedLesson;
+};
+
+const isLessonCompleted = async (userId, lessonId) => {
+  // get all challenges for the lesson 
+  const challenges = await db.query.challenges.findMany({
+    where: eq(schema.challenges.lessonId, lessonId),
+  });
+  // get all challenge progress for the user
+  const challengeIds = challenges.map((challenge) => challenge.id);
+  const completedChallenges = await db.query.challengeProgress.findMany({
+    where: and(
+      eq(schema.challengeProgress.userId, userId),
+      inArray(schema.challengeProgress.challengeId, challengeIds),
+      eq(schema.challengeProgress.completed, true)
+    ),
+  });
+  return completedChallenges.length === challenges.length;
+};
+
+export {
+  getAllLessons,
+  getLessonById,
+  createLesson,
+  updateLesson,
+  deleteLesson,
+  isLessonCompleted,
+};

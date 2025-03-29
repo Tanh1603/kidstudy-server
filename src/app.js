@@ -5,7 +5,7 @@
  import cors from "cors";
  import { fileURLToPath } from "url";
  import dotenv from "dotenv";
-
+ import mainRouter from "./routers/index.js";
 
  // Load environment variables
  dotenv.config();
@@ -28,5 +28,7 @@
  app.get("/", (req, res) => {
    res.json({ message: "Welcome to KidStudy API" });
  });
+
+ app.use("/api/v1/", mainRouter);
 
  export default app;

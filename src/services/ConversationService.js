@@ -1,43 +1,79 @@
-import BaseService from "./BaseService.js";
-import ConversationRepository from "../repositories/ConversationRepository.js";
+import db from "../db/index.js";
+import * as schema from "../db/schema.js";
+import { eq, desc } from "drizzle-orm";
 
-class ConversationService extends BaseService {
-  constructor() {
-    super(new ConversationRepository());
-  }
+// Conversations
+const getAllConversations = async () => {
+  const conversations = await db.query.conversations.findMany({
+    with: {
+      messages: {
+        orderBy: [desc(schema.messages.createdAt)],
+      },
+    },
+    orderBy: [desc(schema.conversations.createdAt)],
+  });
+  return conversations;
+};
 
-  async getUserConversations(userId) {
-    return await this.repository.getConversationsByUserId(userId);
-  }
+const getConversationById = async (id) => {
+  const conversation = await db.query.conversations.findFirst({
+    where: eq(schema.conversations.id, id),
+    with: {
+      messages: {
+        orderBy: [desc(schema.messages.createdAt)],
+      },
+    },
+  });
+  return conversation;
+};
 
-  async getConversationWithMessages(id) {
-    const conversation = await this.repository.getConversationWithMessages(id);
-    if (!conversation) {
-      throw new Error("Conversation not found");
-    }
-    return conversation;
-  }
+const createConversation = async (conversation) => {
+  const newConversation = await db
+    .insert(schema.conversations)
+    .values(conversation)
+    .returning();
+  return newConversation;
+};
 
-  async createConversation(userId) {
-    return await this.repository.create({
-      userId,
-      createdAt: new Date(),
-    });
-  }
+const deleteConversation = async (id) => {
+  const deletedConversation = await db
+    .delete(schema.conversations)
+    .where(eq(schema.conversations.id, id))
+    .returning();
+  return deletedConversation;
+};
 
-  async addMessage(conversationId, sender, text, audioUrl = null) {
-    // Validate sender
-    if (sender !== "user" && sender !== "bot") {
-      throw new Error("Invalid sender value");
-    }
+// Messages
+const getAllMessages = async () => {
+  const messages = await db.query.messages.findMany();
+  return messages;
+};
 
-    return await this.repository.addMessage(
+const addMessage = async (message) => {
+  const newMessage = await db
+    .insert(schema.messages)
+    .values({
       conversationId,
-      sender,
-      text,
-      audioUrl
-    );
-  }
-}
+      ...message,
+    })
+    .returning();
+  return newMessage;
+};
 
-export default ConversationService;
+const updateMessage = async (id, message) => {
+  const updatedMessage = await db
+    .update(schema.messages)
+    .set(message)
+    .where(eq(schema.messages.id, id))
+    .returning();
+  return updatedMessage;
+};
+export {
+  getAllConversations,
+  getConversationById,
+  createConversation,
+  deleteConversation,
+  getAllMessages,
+  addMessage,
+  updateMessage,
+};

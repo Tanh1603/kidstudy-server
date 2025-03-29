@@ -1,54 +1,21 @@
-import BaseService from "./BaseService.js";
-import UserProgressRepository from "../repositories/UserProgressRepository.js";
+import db from "../db/index.js";
+import * as schema from "../db/schema.js";
+// User Progress
+const createUserProgress = async (userProgress) => {
+  const newUserProgress = await db
+    .insert(schema.userProgress)
+    .values(userProgress)
+    .returning();
+  return newUserProgress;
+};
 
-class UserProgressService extends BaseService {
-  constructor() {
-    super(new UserProgressRepository());
-  }
+const updateUserProgress = async (id, userProgress) => {
+  const updatedUserProgress = await db
+    .update(schema.userProgress)
+    .set(userProgress)
+    .where(eq(schema.userProgress.userId, id))
+    .returning();
+  return updatedUserProgress;
+};
 
-  async getUserProfile(userId) {
-    let userProfile = await this.repository.findByUserId(userId);
-
-    if (!userProfile) {
-      // Create new user profile if it doesn't exist
-      userProfile = await this.repository.create({
-        userId,
-        userName: "User",
-        userImageSrc: "/avatar.png",
-        hearts: 5,
-        points: 0,
-      });
-    }
-
-    return userProfile;
-  }
-
-  async getUserChallengeProgress(userId) {
-    return await this.repository.getUserChallengeProgress(userId);
-  }
-
-  async updateChallengeProgress(userId, challengeId, completed) {
-    return await this.repository.updateChallengeProgress(
-      userId,
-      challengeId,
-      completed
-    );
-  }
-
-  async updateHearts(userId, hearts) {
-    const userProfile = await this.getUserProfile(userId);
-    return await this.repository.updateHearts(userId, hearts);
-  }
-
-  async updatePoints(userId, points) {
-    const userProfile = await this.getUserProfile(userId);
-    return await this.repository.updatePoints(userId, points);
-  }
-
-  async updateActiveUnit(userId, activeUnitId) {
-    const userProfile = await this.getUserProfile(userId);
-    return await this.repository.updateActiveUnit(userId, activeUnitId);
-  }
-}
-
-export default UserProgressService;
+export { createUserProgress, updateUserProgress };

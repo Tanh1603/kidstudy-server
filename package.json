@@ -6,21 +6,29 @@
   "type": "module",
   "scripts": {
     "start": "node ./src/server.js",
-    "dev": "nodemon ./src/server.js"
+    "dev": "nodemon ./src/server.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:push": "drizzle-kit push",
+    "db:pull": "drizzle-kit pull",
+    "db:seed": "node src/scripts/seed.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "~1.4.7",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
+    "debug": "~4.4.0",
     "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.28.6",
-    "express": "^4.18.2",
-    "morgan": "~1.9.1",
-    "pg": "^8.14.1"
+    "drizzle-orm": "^0.41.0",
+    "express": "^4.21.2",
+    "morgan": "~1.10.0",
+    "pg": "^8.14.1",
+    "postgres": "^3.4.5"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.19.1",
-    "nodemon": "^3.0.1"
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.6",
+    "nodemon": "^3.1.9"
   }
 }
