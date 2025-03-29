@@ -1,0 +1,24 @@
+{
+  "name": "kidstudy-server",
+  "version": "0.1.0",
+  "description": "RESTful API for KidStudy app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.28.1",
+    "express": "^4.18.2",
+    "morgan": "~1.9.1",
+    "pg": "^8.11.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
