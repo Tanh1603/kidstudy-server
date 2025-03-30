@@ -6,15 +6,22 @@ import {
   updateLesson,
   deleteLesson,
   isLessonCompleted,
+  getFirstIncompleteLesson,
+  getLessonPercentage,
 } from "../controllers/LessonController.js";
 
-const lessonRouter = express.Router();
+const adminLessonRouter = express.Router();
+const userLessonRouter = express.Router();
 
-lessonRouter.get("/", getLessons);
-lessonRouter.get("/:id", getLessonById);
-lessonRouter.post("/", createLesson);
-lessonRouter.put("/:id", updateLesson);
-lessonRouter.delete("/:id", deleteLesson);
-lessonRouter.get("/:id/is-completed", isLessonCompleted);
+adminLessonRouter.get("/", getLessons);
+adminLessonRouter.get("/:id", getLessonById);
+adminLessonRouter.post("/", createLesson);
+adminLessonRouter.put("/:id", updateLesson);
+adminLessonRouter.delete("/:id", deleteLesson);
+adminLessonRouter.get("/:id/is-completed", isLessonCompleted);
 
-export default lessonRouter;
+userLessonRouter.get("/:id/is-completed", isLessonCompleted);
+userLessonRouter.get("/first-incomplete", getFirstIncompleteLesson);
+userLessonRouter.get("/:id/percentage", getLessonPercentage);
+
+export { adminLessonRouter, userLessonRouter };

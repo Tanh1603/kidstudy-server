@@ -1,12 +1,16 @@
 import express from "express";
 import {
-  createUserProgress,
-  updateUserProgress,
+  upsertUserProgress,
+  getAllUserProgress,
+  getUserProgressByUserId,
+  getLeaderboard,
 } from "../controllers/UserProgressController.js";
 
 const userProgressRouter = express.Router();
 
-userProgressRouter.post("/", createUserProgress);
-userProgressRouter.put("/:id", updateUserProgress);
+userProgressRouter.put("/upsert", upsertUserProgress);
+userProgressRouter.get("/leaderboard", getLeaderboard);
+userProgressRouter.get("/:userId", getUserProgressByUserId);
+userProgressRouter.get("/", getAllUserProgress);
 
-export default userProgressRouter;
+export { userProgressRouter };

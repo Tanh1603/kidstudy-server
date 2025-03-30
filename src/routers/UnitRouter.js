@@ -6,14 +6,18 @@ import {
   updateUnit,
   deleteUnit,
   isUnitCompleted,
+  getAllUnitsForUser,
 } from "../controllers/UnitController.js";
-const unitRouter = express.Router();
+const adminUnitRouter = express.Router();
+const userUnitRouter = express.Router();
 
-unitRouter.get("/", getUnits);
-unitRouter.get("/:id", getUnitById);
-unitRouter.post("/", createUnit);
-unitRouter.put("/:id", updateUnit);
-unitRouter.delete("/:id", deleteUnit);
-unitRouter.get("/:id/is-completed", isUnitCompleted);
+adminUnitRouter.get("/", getUnits);
+adminUnitRouter.get("/:id", getUnitById);
+adminUnitRouter.post("/", createUnit);
+adminUnitRouter.put("/:id", updateUnit);
+adminUnitRouter.delete("/:id", deleteUnit);
+adminUnitRouter.get("/:id/is-completed", isUnitCompleted);
 
-export default unitRouter;
+userUnitRouter.get("/", getAllUnitsForUser);
+
+export { adminUnitRouter, userUnitRouter };

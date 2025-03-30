@@ -1,21 +1,31 @@
 import express from "express";
-import lessonRouter from "./LessonRouter.js";
-import unitRouter from "./UnitRouter.js";
-import challengeRouter from "./ChallengeRouter.js";
+import { adminLessonRouter, userLessonRouter } from "./LessonRouter.js";
+import { adminUnitRouter, userUnitRouter } from "./UnitRouter.js";
+import { adminChallengeRouter, userChallengeRouter } from "./ChallengeRouter.js";
 import conservationRouter from "./ConversationRouter.js";
-import userProgressRouter from "./UserProgressRouter.js";
-const routes = [
-  { path: "/lessons", router: lessonRouter },
-  { path: "/units", router: unitRouter },
-  { path: "/challenges", router: challengeRouter },
-  { path: "/conversations", router: conservationRouter },
-  { path: "/user-progress", router: userProgressRouter },
-];
+import { userProgressRouter } from "./UserProgressRouter.js";
 
-const mainRouter = express.Router();
+const userRouter = express.Router();
+const adminRouter = express.Router();
+// admin
+// units
+adminRouter.use("/units", adminUnitRouter);
+userRouter.use("/units", userUnitRouter);
 
-routes.forEach((route) => {
-  mainRouter.use(route.path, route.router);
-});
+// lessons
+adminRouter.use("/lessons", adminLessonRouter);
+userRouter.use("/lessons", userLessonRouter);
 
-export default mainRouter;
+// challenges
+adminRouter.use("/challenges", adminChallengeRouter);
+userRouter.use("/challenges", userChallengeRouter);
+
+// conversations
+adminRouter.use("/conversations", conservationRouter);
+userRouter.use("/conversations", conservationRouter);
+
+// user progress
+adminRouter.use("/user-progress", userProgressRouter);
+userRouter.use("/user-progress", userProgressRouter);
+
+export { adminRouter, userRouter };

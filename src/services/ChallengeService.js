@@ -26,7 +26,6 @@ const getChallengeById = async (id) => {
 const createChallenge = async (challenge) => {
   await db.transaction(async (tx) => {
     try {
-      
       // Add new challenge to database
       const newChallenge = await tx
         .insert(schema.challenges)
@@ -46,9 +45,9 @@ const createChallenge = async (challenge) => {
 
       // Add new challenge options to database
       const newOptions = await tx
-      .insert(schema.challengeOptions)
-      .values(challengeOptions)
-      .returning();
+        .insert(schema.challengeOptions)
+        .values(challengeOptions)
+        .returning();
 
       return { ...newChallenge[0], newOptions };
     } catch (error) {

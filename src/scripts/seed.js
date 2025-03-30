@@ -12,14 +12,24 @@ const main = async () => {
     console.log("Seeding database");
 
     // Xóa dữ liệu cũ
-    await Promise.all([
-      db.delete(schema.userProgress),
-      db.delete(schema.challenges),
-      db.delete(schema.units),
-      db.delete(schema.lessons),
-      db.delete(schema.challengeOptions),
-      db.delete(schema.userSubscription),
-    ]);
+    // await Promise.all([
+    //   db.delete(schema.userProgress),
+    //   db.delete(schema.challenges),
+    //   db.delete(schema.units),
+    //   db.delete(schema.lessons),
+    //   db.delete(schema.challengeOptions),
+    //   db.delete(schema.userSubscription),
+    // ]);
+    await db.execute(`TRUNCATE TABLE "user_progress" RESTART IDENTITY CASCADE`);
+    await db.execute(`TRUNCATE TABLE "challenges" RESTART IDENTITY CASCADE`);
+    await db.execute(`TRUNCATE TABLE "units" RESTART IDENTITY CASCADE`);
+    await db.execute(`TRUNCATE TABLE "lessons" RESTART IDENTITY CASCADE`);
+    await db.execute(
+      `TRUNCATE TABLE "challenge_options" RESTART IDENTITY CASCADE`
+    );
+    await db.execute(
+      `TRUNCATE TABLE "user_subscription" RESTART IDENTITY CASCADE`
+    );
 
     // Thêm dữ liệu Unit
     const units = await db

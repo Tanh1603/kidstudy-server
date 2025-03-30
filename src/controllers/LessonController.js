@@ -1,4 +1,4 @@
-import * as LessonService from "../services/LessonService.js"; 
+import * as LessonService from "../services/LessonService.js";
 
 const getLessons = async (req, res) => {
   try {
@@ -59,4 +59,40 @@ const isLessonCompleted = async (req, res) => {
   }
 };
 
-export { getLessons, getLessonById, createLesson, updateLesson, deleteLesson, isLessonCompleted };
+// user
+const getFirstIncompleteLesson = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const firstIncompleteLesson = await LessonService.getFirstIncompleteLesson(
+      userId
+    );
+    res.status(200).json(firstIncompleteLesson);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getLessonPercentage = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const { id } = req.params;
+    const lessonPercentage = await LessonService.getLessonPercentage(
+      id,
+      userId
+    );
+    res.status(200).json(lessonPercentage);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export {
+  getLessons,
+  getLessonById,
+  createLesson,
+  updateLesson,
+  deleteLesson,
+  isLessonCompleted,
+  getFirstIncompleteLesson,
+  getLessonPercentage,
+};

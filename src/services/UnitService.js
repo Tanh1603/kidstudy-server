@@ -3,14 +3,10 @@ import { eq, asc } from "drizzle-orm";
 import * as schema from "../db/schema.js";
 import { isLessonCompleted } from "./LessonService.js";
 
+// admin
 const getAllUnits = async () => {
   const units = await db.query.units.findMany({
     orderBy: [asc(schema.units.order)],
-    with: {
-      lessons: {
-        orderBy: [asc(schema.lessons.order)],
-      },
-    },
   });
   return units;
 };
@@ -18,11 +14,6 @@ const getAllUnits = async () => {
 const getUnitById = async (id) => {
   const unit = await db.query.units.findFirst({
     where: eq(schema.units.id, id),
-    with: {
-      lessons: {
-        orderBy: [asc(schema.lessons.order)],
-      },
-    },
   });
   return unit;
 };
@@ -49,6 +40,53 @@ const deleteUnit = async (id) => {
   return deletedUnit;
 };
 
+// user
+const getAllUnitsForUser = async (userId) => {
+  if (!userId) return [];
+
+  const data = await db.query.units.findMany({
+    orderBy: (units, { asc }) => [asc(units.order)],
+    with: {
+      lessons: {
+        orderBy: (lessons, { asc }) => [asc(lessons.order)],
+        with: {
+          challenges: {
+            orderBy: (challenges, { asc }) => [asc(challenges.order)],
+            with: {
+              challengeProgress: {
+                where: eq(schema.challengeProgress.userId, userId),
+                columns: { completed: true }, // Chỉ lấy cột cần thiết để tối ưu DB query
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return data.map((unit) => {
+    // Tính toán completed cho từng lesson
+    const lessonsWithCompletedStatus = unit.lessons.map((lesson) => ({
+      ...lesson,
+      completed: lesson.challenges.every((challenge) =>
+        challenge.challengeProgress?.some((progress) => progress.completed)
+      ),
+    }));
+
+    // Một unit hoàn thành nếu tất cả lessons của nó hoàn thành
+    const unitCompleted = lessonsWithCompletedStatus.every(
+      (lesson) => lesson.completed
+    );
+
+    return {
+      ...unit,
+      lessons: lessonsWithCompletedStatus,
+      completed: unitCompleted, // ✅ Thêm trường `completed` cho unit
+    };
+  });
+};
+
+
 const isUnitCompleted = async (userId, unitId) => {
   // get all lessons for the unit
   const lessons = await db.query.lessons.findMany({
@@ -65,4 +103,12 @@ const isUnitCompleted = async (userId, unitId) => {
   return true;
 };
 
-export { getAllUnits, getUnitById, createUnit, updateUnit, deleteUnit, isUnitCompleted };
+export {
+  getAllUnits,
+  getUnitById,
+  createUnit,
+  updateUnit,
+  deleteUnit,
+  getAllUnitsForUser,
+  isUnitCompleted,
+};

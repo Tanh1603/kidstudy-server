@@ -11,21 +11,22 @@ import {
   updateChallengeProgress,
 } from "../controllers/ChallengeController.js";
 
-const challengeRouter = express.Router();
+const adminChallengeRouter = express.Router();
+const userChallengeRouter = express.Router();
 
 // Challenges
-challengeRouter.get("/", getChallenges);
-challengeRouter.get("/:id", getChallengeById);
-challengeRouter.post("/", createChallenge);
-challengeRouter.put("/:id", updateChallenge);
-challengeRouter.delete("/:id", deleteChallenge);
+adminChallengeRouter.get("/", getChallenges);
+adminChallengeRouter.get("/:id", getChallengeById);
+adminChallengeRouter.post("/", createChallenge);
+adminChallengeRouter.put("/:id", updateChallenge);
+adminChallengeRouter.delete("/:id", deleteChallenge);
 
 // Challenge Options
-challengeRouter.post("/:id/options", addChallengeOption);
-challengeRouter.put("/:id/options/:optionId", updateChallengeOption);
-challengeRouter.delete("/:id/options/:optionId", deleteChallengeOption);
+adminChallengeRouter.post("/:id/options", addChallengeOption);
+adminChallengeRouter.put("/:id/options/:optionId", updateChallengeOption);
+adminChallengeRouter.delete("/:id/options/:optionId", deleteChallengeOption);
 
 // Challenge Progress
-challengeRouter.put("/:id/progress", updateChallengeProgress);
+userChallengeRouter.put("/:id/progress", updateChallengeProgress);
 
-export default challengeRouter;
+export { adminChallengeRouter, userChallengeRouter };

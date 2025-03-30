@@ -1,8 +1,8 @@
 import * as UnitService from "../services/UnitService.js";
-
+// admin
 const getUnits = async (req, res) => {
-    try {
-        const units = await UnitService.getAllUnits();
+  try {
+    const units = await UnitService.getAllUnits();
         res.status(200).json(units);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -59,4 +59,15 @@ const isUnitCompleted = async (req, res) => {
   }
 };
 
-export { getUnits, getUnitById, createUnit, updateUnit, deleteUnit, isUnitCompleted };
+// user
+const getAllUnitsForUser = async (req, res) => {
+  const { userId } = req.query;
+  try {
+    const units = await UnitService.getAllUnitsForUser(userId);
+    res.status(200).json(units);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { getUnits, getUnitById, createUnit, updateUnit, deleteUnit, isUnitCompleted, getAllUnitsForUser };
