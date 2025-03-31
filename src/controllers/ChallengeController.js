@@ -103,6 +103,21 @@ const updateChallengeProgress = async (req, res) => {
   }
 };
 
+const upsertChallengeProgress = async (req, res) => {
+  const { id } = req.params;
+  const { userId, completed } = req.query;
+
+  try {
+    const challengeProgress = await ChallengeService.upsertChallengeProgress(
+      userId,
+      id
+    );
+    res.status(200).json(challengeProgress);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   getChallenges,
   getChallengeById,
@@ -113,4 +128,5 @@ export {
   updateChallengeOption,
   deleteChallengeOption,
   updateChallengeProgress,
+  upsertChallengeProgress,
 };

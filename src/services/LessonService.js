@@ -67,53 +67,40 @@ const isLessonCompleted = async (userId, lessonId) => {
 
 // user
 const getFirstIncompleteLesson = async (userId) => {
-  // Lấy lessons với điều kiện where ngay từ đầu để hiệu quả hơn
-  const lessons = await db.query.lessons.findMany({
-    orderBy: [asc(schema.lessons.order)],
+  const unitsInActiveCourse = await db.query.units.findMany({
+    orderBy: [asc(schema.units.order)],
     with: {
-      unit: true,
-      challenges: {
-        orderBy: [asc(schema.challenges.order)],
+      lessons: {
+        orderBy: [asc(schema.lessons.order)],
         with: {
-          challengeProgress: {
-            where: eq(schema.challengeProgress.userId, userId),
+          unit: true,
+          challenges: {
+            with: {
+              challengeProgress: {
+                where: eq(schema.challengeProgress.userId, userId),
+              },
+            },
           },
         },
       },
     },
   });
 
-  // Kiểm tra challenge chưa hoàn thành với logic rõ ràng hơn
-  const firstIncompleteLesson = lessons.find((lesson) => {
-    // Đảm bảo lesson có challenges
-    if (!lesson.challenges || lesson.challenges.length === 0) {
-      return {
-        activeLesson: null,
-        activeLessonId: null,
-      };
-    }
-
-    // Log thông tin để debug
-    console.log(
-      `Checking lesson ${lesson.id} with ${lesson.challenges.length} challenges`
-    );
-
-    return lesson.challenges.some((challenge) => {
-      // Kiểm tra chi tiết từng challenge
-      const hasNoProgress =
-        !challenge.challengeProgress ||
-        challenge.challengeProgress.length === 0;
-      const hasIncompleteProgress =
-        challenge.challengeProgress &&
-        challenge.challengeProgress.some((p) => p && p.completed === false);
-
-      return hasNoProgress || hasIncompleteProgress;
+  const firstUncompletedLesson = unitsInActiveCourse
+    .flatMap((unit) => unit.lessons)
+    .find((lesson) => {
+      return lesson.challenges.some((challenge) => {
+        return (
+          !challenge.challengeProgress ||
+          challenge.challengeProgress.length === 0 ||
+          challenge.challengeProgress.some((progress) => !progress.completed)
+        );
+      });
     });
-  });
 
   return {
-    activeLesson: firstIncompleteLesson || null,
-    activeLessonId: firstIncompleteLesson?.id || null,
+    activeLesson: firstUncompletedLesson,
+    activeLessonId: firstUncompletedLesson?.id,
   };
 };
 

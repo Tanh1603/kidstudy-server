@@ -86,6 +86,17 @@ const getLessonPercentage = async (req, res) => {
   }
 };
 
+const getUserLessonById = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const { id } = req.params;
+    const userLesson = await LessonService.getLessonByUserId(id, userId);
+    res.status(200).json(userLesson);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   getLessons,
   getLessonById,
@@ -95,4 +106,5 @@ export {
   isLessonCompleted,
   getFirstIncompleteLesson,
   getLessonPercentage,
+  getUserLessonById,
 };

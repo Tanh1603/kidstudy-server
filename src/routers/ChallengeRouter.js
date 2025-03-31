@@ -9,6 +9,7 @@ import {
   updateChallengeOption,
   deleteChallengeOption,
   updateChallengeProgress,
+  upsertChallengeProgress,
 } from "../controllers/ChallengeController.js";
 
 const adminChallengeRouter = express.Router();
@@ -27,6 +28,7 @@ adminChallengeRouter.put("/:id/options/:optionId", updateChallengeOption);
 adminChallengeRouter.delete("/:id/options/:optionId", deleteChallengeOption);
 
 // Challenge Progress
+userChallengeRouter.put("/:id/progress/upsert", upsertChallengeProgress);
 userChallengeRouter.put("/:id/progress", updateChallengeProgress);
 
 export { adminChallengeRouter, userChallengeRouter };

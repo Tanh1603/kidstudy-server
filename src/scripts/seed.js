@@ -20,7 +20,7 @@ const main = async () => {
     //   db.delete(schema.challengeOptions),
     //   db.delete(schema.userSubscription),
     // ]);
-    await db.execute(`TRUNCATE TABLE "user_progress" RESTART IDENTITY CASCADE`);
+    // await db.execute(`TRUNCATE TABLE "user_progress" RESTART IDENTITY CASCADE`);
     await db.execute(`TRUNCATE TABLE "challenges" RESTART IDENTITY CASCADE`);
     await db.execute(`TRUNCATE TABLE "units" RESTART IDENTITY CASCADE`);
     await db.execute(`TRUNCATE TABLE "lessons" RESTART IDENTITY CASCADE`);
@@ -29,6 +29,9 @@ const main = async () => {
     );
     await db.execute(
       `TRUNCATE TABLE "user_subscription" RESTART IDENTITY CASCADE`
+    );
+    await db.execute(
+      `TRUNCATE TABLE "challenge_progress" RESTART IDENTITY CASCADE`
     );
 
     // Thêm dữ liệu Unit

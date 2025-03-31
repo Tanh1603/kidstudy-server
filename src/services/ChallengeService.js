@@ -1,6 +1,8 @@
 import db from "../db/index.js";
 import * as schema from "../db/schema.js";
 import { eq, asc, and, desc } from "drizzle-orm";
+import { getUserProgressByUserId } from "./UserProgressService.js";
+const MAX_HEARTS = 5;
 
 // Challenges
 const getAllChallenges = async () => {
@@ -103,7 +105,7 @@ const deleteChallengeOption = async (id) => {
 };
 
 // challenge progress
-const updateChallengeProgress = async (userId, challengeId, completed) => {
+const updateChallengeProgress = async (userId, challengeId) => {
   // Check if progress entry exists
   const existingProgress = await db.query.challengeProgress.findFirst({
     where: and(
@@ -141,6 +143,64 @@ const updateChallengeProgress = async (userId, challengeId, completed) => {
   }
 };
 
+const upsertChallengeProgress = async (userId, challengeId) => {
+  const currentUserProgress = await getUserProgressByUserId(userId);
+
+  if (!currentUserProgress) throw new Error("User progress not found.");
+
+  const challenge = await db.query.challenges.findFirst({
+    where: eq(schema.challenges.id, challengeId),
+  });
+
+  if (!challenge) {
+    throw new Error("Challenge not found");
+  }
+
+  const existingChallengeProgress = await db.query.challengeProgress.findFirst({
+    where: and(
+      eq(schema.challengeProgress.userId, userId),
+      eq(schema.challengeProgress.challengeId, challengeId)
+    ),
+  });
+
+  const isPractice = !!existingChallengeProgress;
+
+  if (currentUserProgress.hearts === 0 && !isPractice)
+    return { error: "hearts" };
+
+  if (isPractice) {
+    await db
+      .update(schema.challengeProgress)
+      .set({ completed: true })
+      .where(eq(schema.challengeProgress.id, existingChallengeProgress.id));
+
+    await db
+      .update(schema.userProgress)
+      .set({
+        hearts: Math.min(currentUserProgress.hearts + 1, MAX_HEARTS),
+        points: currentUserProgress.points + 10,
+      })
+      .where(eq(schema.userProgress.userId, userId));
+
+    return { success: true };
+  }
+
+  await db.insert(schema.challengeProgress).values({
+    userId,
+    challengeId,
+    completed: true,
+  });
+
+  await db
+    .update(schema.userProgress)
+    .set({
+      points: currentUserProgress.points + 10,
+    })
+    .where(eq(schema.userProgress.userId, userId));
+
+  return { success: true };
+};
+
 export {
   getAllChallenges,
   getChallengeById,
@@ -151,4 +211,5 @@ export {
   updateChallengeOption,
   deleteChallengeOption,
   updateChallengeProgress,
+  upsertChallengeProgress,
 };
