@@ -4,6 +4,7 @@ import { adminUnitRouter, userUnitRouter } from "./UnitRouter.js";
 import { adminChallengeRouter, userChallengeRouter } from "./ChallengeRouter.js";
 import conservationRouter from "./ConversationRouter.js";
 import { userProgressRouter } from "./UserProgressRouter.js";
+import { challengeOptionsRouter } from "./ChallengeOptionsRouter.js";
 
 const userRouter = express.Router();
 const adminRouter = express.Router();
@@ -19,6 +20,10 @@ userRouter.use("/lessons", userLessonRouter);
 // challenges
 adminRouter.use("/challenges", adminChallengeRouter);
 userRouter.use("/challenges", userChallengeRouter);
+
+// challenge options
+adminRouter.use("/challenge-options", challengeOptionsRouter);
+// userRouter.use("/challenge-options", challengeOptionsRouter);
 
 // conversations
 adminRouter.use("/conversations", conservationRouter);
