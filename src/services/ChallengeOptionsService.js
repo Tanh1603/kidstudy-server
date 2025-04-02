@@ -10,7 +10,7 @@ const getChallengeOptions = async (challengeId) => {
   const challengeOptions = await db.query.challengeOptions.findMany({
     where: eq(schema.challengeOptions.id, challengeId),
   });
-  return challengeOptions;  
+  return challengeOptions;
 };
 
 const createChallengeOption = async (challengeId, option) => {
@@ -18,7 +18,7 @@ const createChallengeOption = async (challengeId, option) => {
     challengeId,
     option,
   });
-  return challengeOption;
+  return challengeOption[0];
 };
 
 const updateChallengeOption = async (id, option) => {
@@ -28,14 +28,14 @@ const updateChallengeOption = async (id, option) => {
       option,
     })
     .where(eq(schema.challengeOptions.id, id));
-  return challengeOption;
+  return challengeOption[0];
 };
 
 const deleteChallengeOption = async (id) => {
   const challengeOption = await db
     .delete(schema.challengeOptions)
     .where(eq(schema.challengeOptions.id, id));
-  return challengeOption;
+  return challengeOption[0];
 };
 
 export {

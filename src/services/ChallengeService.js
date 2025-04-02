@@ -25,7 +25,7 @@ const getChallengeById = async (id) => {
   return challenge;
 };
 
-const createChallenge = async (challenge) => {
+const createChallengeWithOptions = async (challenge) => {
   await db.transaction(async (tx) => {
     try {
       // Add new challenge to database
@@ -58,13 +58,18 @@ const createChallenge = async (challenge) => {
   });
 };
 
+const createChallenge = async (challenge) => {
+  const newChallenge = await db.insert(schema.challenges).values(challenge).returning();
+  return newChallenge[0];
+};
+
 const updateChallenge = async (id, challenge) => {
   const updatedChallenge = await db
     .update(schema.challenges)
     .set(challenge)
     .where(eq(schema.challenges.id, id))
     .returning();
-  return updatedChallenge;
+  return updatedChallenge[0];
 };
 
 const deleteChallenge = async (id) => {
@@ -72,7 +77,7 @@ const deleteChallenge = async (id) => {
     .delete(schema.challenges)
     .where(eq(schema.challenges.id, id))
     .returning();
-  return deletedChallenge;
+  return deletedChallenge[0];
 };
 
 // Challenge Options
@@ -84,7 +89,7 @@ const addChallengeOption = async (challengeId, challengeOption) => {
       ...challengeOption,
     })
     .returning();
-  return newChallengeOption;
+  return newChallengeOption[0];
 };
 
 const updateChallengeOption = async (id, challengeOption) => {
@@ -93,7 +98,7 @@ const updateChallengeOption = async (id, challengeOption) => {
     .set(challengeOption)
     .where(eq(schema.challengeOptions.id, id))
     .returning();
-  return updatedChallengeOption;
+  return updatedChallengeOption[0];
 };
 
 const deleteChallengeOption = async (id) => {
@@ -101,7 +106,7 @@ const deleteChallengeOption = async (id) => {
     .delete(schema.challengeOptions)
     .where(eq(schema.challengeOptions.id, id))
     .returning();
-  return deletedChallengeOption;
+  return deletedChallengeOption[0];
 };
 
 // challenge progress
@@ -204,7 +209,7 @@ const upsertChallengeProgress = async (userId, challengeId) => {
 export {
   getAllChallenges,
   getChallengeById,
-  createChallenge,
+  createChallengeWithOptions,
   updateChallenge,
   deleteChallenge,
   addChallengeOption,

@@ -28,7 +28,7 @@ const getLessonById = async (id) => {
 
 const createLesson = async (lesson) => {
   const newLesson = await db.insert(schema.lessons).values(lesson).returning();
-  return newLesson;
+  return newLesson[0];
 };
 
 const updateLesson = async (id, lesson) => {
@@ -37,7 +37,7 @@ const updateLesson = async (id, lesson) => {
     .set(lesson)
     .where(eq(schema.lessons.id, id))
     .returning();
-  return updatedLesson;
+  return updatedLesson[0];
 };
 
 const deleteLesson = async (id) => {
@@ -45,7 +45,7 @@ const deleteLesson = async (id) => {
     .delete(schema.lessons)
     .where(eq(schema.lessons.id, id))
     .returning();
-  return deletedLesson;
+  return deletedLesson[0];
 };
 
 const isLessonCompleted = async (userId, lessonId) => {

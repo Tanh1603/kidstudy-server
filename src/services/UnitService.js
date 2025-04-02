@@ -20,7 +20,7 @@ const getUnitById = async (id) => {
 
 const createUnit = async (unit) => {
   const newUnit = await db.insert(schema.units).values(unit).returning();
-  return newUnit;
+  return newUnit[0];
 };
 
 const updateUnit = async (id, unit) => {
@@ -29,7 +29,7 @@ const updateUnit = async (id, unit) => {
     .set(unit)
     .where(eq(schema.units.id, id))
     .returning();
-  return updatedUnit;
+  return updatedUnit[0];
 };
 
 const deleteUnit = async (id) => {
@@ -37,7 +37,7 @@ const deleteUnit = async (id) => {
     .delete(schema.units)
     .where(eq(schema.units.id, id))
     .returning();
-  return deletedUnit;
+  return deletedUnit[0];
 };
 
 // user
