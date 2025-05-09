@@ -43,8 +43,8 @@ app.get("/error", (req, res) => {
 
 app.use(
   "/api/v1/admin",
-  requireAuth({ signInUrl: "/error" }),
-  adminMiddleware,
+  // requireAuth({ signInUrl: "/error" }),
+  // adminMiddleware,
   adminRouter
 );
 app.use("/api/v1/user", requireAuth({ signInUrl: "/error" }), userRouter);

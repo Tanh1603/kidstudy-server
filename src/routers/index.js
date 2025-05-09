@@ -1,10 +1,17 @@
 import express from "express";
 import { adminLessonRouter, userLessonRouter } from "./LessonRouter.js";
 import { adminUnitRouter, userUnitRouter } from "./UnitRouter.js";
-import { adminChallengeRouter, userChallengeRouter } from "./ChallengeRouter.js";
+import {
+  adminChallengeOptionsRouter,
+  adminChallengeRouter,
+  userChallengeRouter,
+} from "./ChallengeRouter.js";
 import conservationRouter from "./ConversationRouter.js";
 import { userProgressRouter } from "./UserProgressRouter.js";
-import { challengeOptionsRouter } from "./ChallengeOptionsRouter.js";
+import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
+import multer from "multer";
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 const userRouter = express.Router();
 const adminRouter = express.Router();
@@ -22,8 +29,7 @@ adminRouter.use("/challenges", adminChallengeRouter);
 userRouter.use("/challenges", userChallengeRouter);
 
 // challenge options
-adminRouter.use("/challenge-options", challengeOptionsRouter);
-// userRouter.use("/challenge-options", challengeOptionsRouter);
+adminRouter.use("/challenge-options", adminChallengeOptionsRouter);
 
 // conversations
 adminRouter.use("/conversations", conservationRouter);
@@ -32,5 +38,33 @@ userRouter.use("/conversations", conservationRouter);
 // user progress
 adminRouter.use("/user-progress", userProgressRouter);
 userRouter.use("/user-progress", userProgressRouter);
+
+adminRouter.post("/upload", upload.single("file"), async (req, res) => {
+  try {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const result = await uploadFile(file.buffer);
+    return res.status(201).json({
+      message: "Success",
+      url: result,
+    });
+  } catch (error) {
+    console.error("Upload error:", error);
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+adminRouter.delete("/upload", async (req, res) => {
+  try {
+    const url = req.query.fileUrl;
+    const result = await deleteFile(url);
+    return res.status(200).json({ message: result });
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+});
 
 export { adminRouter, userRouter };

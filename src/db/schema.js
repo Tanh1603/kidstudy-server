@@ -61,6 +61,7 @@ const challenges = pgTable("challenges", {
     .notNull(),
   type: challengesEnum("type").notNull(),
   question: text("question").notNull(),
+  imageSrc: text("image_src"),
   audioSrc: text("audio_src"),
   order: integer("order").notNull(),
 });

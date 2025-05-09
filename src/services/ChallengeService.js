@@ -25,41 +25,11 @@ const getChallengeById = async (id) => {
   return challenge;
 };
 
-const createChallengeWithOptions = async (challenge) => {
-  await db.transaction(async (tx) => {
-    try {
-      // Add new challenge to database
-      const newChallenge = await tx
-        .insert(schema.challenges)
-        .values({
-          ...challenge,
-        })
-        .returning();
-
-      // get challenge id from new challenge
-      const challengeId = newChallenge[0].id;
-
-      // copy challenge options
-      const challengeOptions = challenge.challengeOptions.map((option) => ({
-        ...option,
-        challengeId,
-      }));
-
-      // Add new challenge options to database
-      const newOptions = await tx
-        .insert(schema.challengeOptions)
-        .values(challengeOptions)
-        .returning();
-
-      return { ...newChallenge[0], newOptions };
-    } catch (error) {
-      throw error;
-    }
-  });
-};
-
 const createChallenge = async (challenge) => {
-  const newChallenge = await db.insert(schema.challenges).values(challenge).returning();
+  const newChallenge = await db
+    .insert(schema.challenges)
+    .values(challenge)
+    .returning();
   return newChallenge[0];
 };
 
@@ -81,13 +51,10 @@ const deleteChallenge = async (id) => {
 };
 
 // Challenge Options
-const addChallengeOption = async (challengeId, challengeOption) => {
+const addChallengeOption = async (challengeOption) => {
   const newChallengeOption = await db
     .insert(schema.challengeOptions)
-    .values({
-      challengeId,
-      ...challengeOption,
-    })
+    .values(challengeOption)
     .returning();
   return newChallengeOption[0];
 };
@@ -209,7 +176,7 @@ const upsertChallengeProgress = async (userId, challengeId) => {
 export {
   getAllChallenges,
   getChallengeById,
-  createChallengeWithOptions,
+  createChallenge,
   updateChallenge,
   deleteChallenge,
   addChallengeOption,

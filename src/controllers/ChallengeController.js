@@ -42,8 +42,8 @@ const updateChallenge = async (req, res) => {
 const deleteChallenge = async (req, res) => {
   const { id } = req.params;
   try {
-    const challenge = await ChallengeService.deleteChallenge(id);
-    res.status(200).json(challenge);
+    await ChallengeService.deleteChallenge(id);
+    res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -51,12 +51,8 @@ const deleteChallenge = async (req, res) => {
 
 // Challenge Options
 const addChallengeOption = async (req, res) => {
-  const { id } = req.params;
   try {
-    const challengeOption = await ChallengeService.addChallengeOption(
-      id,
-      req.body
-    );
+    const challengeOption = await ChallengeService.addChallengeOption(req.body);
     res.status(201).json(challengeOption);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -79,8 +75,8 @@ const updateChallengeOption = async (req, res) => {
 const deleteChallengeOption = async (req, res) => {
   const { id } = req.params;
   try {
-    const challengeOption = await ChallengeService.deleteChallengeOption(id);
-    res.status(200).json(challengeOption);
+    await ChallengeService.deleteChallengeOption(id);
+    res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

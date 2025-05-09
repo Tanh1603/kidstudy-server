@@ -13,6 +13,7 @@ import {
 } from "../controllers/ChallengeController.js";
 
 const adminChallengeRouter = express.Router();
+const adminChallengeOptionsRouter = express.Router();
 const userChallengeRouter = express.Router();
 
 // Challenges
@@ -23,12 +24,16 @@ adminChallengeRouter.put("/:id", updateChallenge);
 adminChallengeRouter.delete("/:id", deleteChallenge);
 
 // Challenge Options
-adminChallengeRouter.post("/:id/options", addChallengeOption);
-adminChallengeRouter.put("/:id/options/:optionId", updateChallengeOption);
-adminChallengeRouter.delete("/:id/options/:optionId", deleteChallengeOption);
+adminChallengeOptionsRouter.post("/", addChallengeOption);
+adminChallengeOptionsRouter.put("/:id", updateChallengeOption);
+adminChallengeOptionsRouter.delete("/:id", deleteChallengeOption);
 
 // Challenge Progress
 userChallengeRouter.put("/:id/progress/upsert", upsertChallengeProgress);
 userChallengeRouter.put("/:id/progress", updateChallengeProgress);
 
-export { adminChallengeRouter, userChallengeRouter };
+export {
+  adminChallengeRouter,
+  userChallengeRouter,
+  adminChallengeOptionsRouter,
+};

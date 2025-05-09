@@ -21,6 +21,7 @@ CREATE TABLE "challenges" (
 	"lesson_id" integer NOT NULL,
 	"type" "type" NOT NULL,
 	"question" text NOT NULL,
+	"image_src" text,
 	"audio_src" text,
 	"order" integer NOT NULL
 );

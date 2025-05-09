@@ -1,5 +1,5 @@
 {
-  "id": "8d31ee8b-7ab2-4321-a6ef-301fd0038cd1",
+  "id": "ba407691-8bf2-4d0a-a2ad-89c585030616",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -147,6 +147,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "image_src": {
+          "name": "image_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "audio_src": {
           "name": "audio_src",
