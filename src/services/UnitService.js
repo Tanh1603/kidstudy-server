@@ -6,7 +6,7 @@ import { isLessonCompleted } from "./LessonService.js";
 // admin
 const getAllUnits = async () => {
   const units = await db.query.units.findMany({
-    orderBy: [asc(schema.units.order)],
+    orderBy: [asc(schema.units.id)],
   });
   return units;
 };

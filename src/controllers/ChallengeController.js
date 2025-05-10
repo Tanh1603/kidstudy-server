@@ -50,6 +50,16 @@ const deleteChallenge = async (req, res) => {
 };
 
 // Challenge Options
+const getChallengeOptionByChallengeId = async (req, res) => {
+  try {
+    const id = req.query.challengeId;
+    const options = await ChallengeService.getChallengeOptionByChallengeId(id);
+    res.status(200).json(options);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const addChallengeOption = async (req, res) => {
   try {
     const challengeOption = await ChallengeService.addChallengeOption(req.body);
@@ -125,4 +135,5 @@ export {
   deleteChallengeOption,
   updateChallengeProgress,
   upsertChallengeProgress,
+  getChallengeOptionByChallengeId
 };

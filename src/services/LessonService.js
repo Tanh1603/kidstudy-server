@@ -4,7 +4,7 @@ import * as schema from "../db/schema.js";
 
 const getAllLessons = async () => {
   const lessons = await db.query.lessons.findMany({
-    orderBy: [asc(schema.lessons.order)],
+    orderBy: [asc(schema.lessons.id)],
     with: {
       challenges: {
         orderBy: [asc(schema.challenges.order)],

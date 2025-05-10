@@ -7,7 +7,7 @@ const MAX_HEARTS = 5;
 // Challenges
 const getAllChallenges = async () => {
   const challenges = await db.query.challenges.findMany({
-    orderBy: [asc(schema.challenges.order)],
+    orderBy: [asc(schema.challenges.id)],
     with: {
       challengeOptions: true,
     },
@@ -51,6 +51,15 @@ const deleteChallenge = async (id) => {
 };
 
 // Challenge Options
+
+const getChallengeOptionByChallengeId = async (challengeId) => {
+  const options = await db.query.challengeOptions.findMany({
+    orderBy: [asc(schema.challengeOptions.id)],
+    where: eq(schema.challengeOptions.challengeId, challengeId),
+  });
+  return options ?? [];
+};
+
 const addChallengeOption = async (challengeOption) => {
   const newChallengeOption = await db
     .insert(schema.challengeOptions)
@@ -184,4 +193,5 @@ export {
   deleteChallengeOption,
   updateChallengeProgress,
   upsertChallengeProgress,
+  getChallengeOptionByChallengeId,
 };

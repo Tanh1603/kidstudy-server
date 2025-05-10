@@ -10,6 +10,7 @@ import {
   deleteChallengeOption,
   updateChallengeProgress,
   upsertChallengeProgress,
+  getChallengeOptionByChallengeId,
 } from "../controllers/ChallengeController.js";
 
 const adminChallengeRouter = express.Router();
@@ -24,6 +25,7 @@ adminChallengeRouter.put("/:id", updateChallenge);
 adminChallengeRouter.delete("/:id", deleteChallenge);
 
 // Challenge Options
+adminChallengeOptionsRouter.get("/", getChallengeOptionByChallengeId);
 adminChallengeOptionsRouter.post("/", addChallengeOption);
 adminChallengeOptionsRouter.put("/:id", updateChallengeOption);
 adminChallengeOptionsRouter.delete("/:id", deleteChallengeOption);
