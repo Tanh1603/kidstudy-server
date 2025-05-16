@@ -42,12 +42,12 @@ app.get("/error", (req, res) => {
 });
 
 app.use(
-  "/api/v1/admin",
+  "/admin",
   // requireAuth({ signInUrl: "/error" }),
   // adminMiddleware,
   adminRouter
 );
-app.use("/api/v1/user", requireAuth({ signInUrl: "/error" }), userRouter);
+app.use("/user", requireAuth({ signInUrl: "/error" }), userRouter);
 // app.use("/api/v1/user", userRouter);
 
 app.use("/fix", fixRouter);
