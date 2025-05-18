@@ -167,7 +167,30 @@ const messagesRelations = relations(messages, ({ one }) => ({
     references: [conversations.id],
   }),
 }));
+// 📌 Định nghĩa trạng thái lời mời kết bạn
+const friendRequestStatusEnum = pgEnum("status", ["pending", "accepted", "declined"]);
 
+// 📌 Bảng friend_requests (Quản lý lời mời kết bạn)
+const friendRequests = pgTable("friend_requests", {
+  id: serial("id").primaryKey(),
+  senderId: text("sender_id").notNull(),
+  receiverId: text("receiver_id").notNull(),
+  status: friendRequestStatusEnum("status").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+
+export { friendRequests, friendRequestStatusEnum };
+//---------------------------------------------------------------------------------------------------------------
+//Diễn đàn Chat
+const chatLogs = pgTable("chat_logs", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(), 
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export { chatLogs };
 
 
 export {

@@ -13,8 +13,6 @@ import {
   clerkMiddleware,
 } from "@clerk/express";
 import fixRouter from "./routers/FixRouter.js";
-
-
 import adminMiddleware from "./middlewares/AuthMiddleware.js";
 
 // Load environment variables
@@ -47,9 +45,11 @@ app.use(
   // adminMiddleware,
   adminRouter
 );
-app.use("/user", requireAuth({ signInUrl: "/error" }), userRouter);
-// app.use("/api/v1/user", userRouter);
+//app.use("/user", requireAuth({ signInUrl: "/error" }), userRouter);
+app.use("/user", userRouter);
 
 app.use("/fix", fixRouter);
+
+
 
 export default app;
