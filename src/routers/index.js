@@ -111,10 +111,16 @@ userRouter.get("/friends/:userId", async (req, res) => {
         const { userId } = req.params;
         
         const friends = await sql`
-            SELECT sender_id
-            FROM friend_requests
-            WHERE receiver_id=${userId}
-            AND status = 'accepted'
+        SELECT sender_id
+        FROM friend_requests
+        WHERE receiver_id = ${userId}
+        AND status = 'accepted'
+        UNION
+        SELECT receiver_id
+        FROM friend_requests
+        WHERE sender_id = ${userId}
+        AND status = 'accepted';
+
         `;
         res.json(friends);
     } catch (error) {
@@ -155,7 +161,7 @@ userRouter.post("/send_messages", async (req, res) => {
 //API Lấy danh sách tin nhắn
 userRouter.post("/get_messages", async (req, res) => {
     try {
-        const chatData = await sql`SELECT * FROM chat_logs ORDER BY created_at DESC`;
+        const chatData = await sql`SELECT * FROM chat_logs ORDER BY created_at ASC`;
         res.json(chatData);
     } catch (error) {
         res.status(500).json({ error: error.message });

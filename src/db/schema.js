@@ -185,7 +185,7 @@ export { friendRequests, friendRequestStatusEnum };
 //Diễn đàn Chat
 const chatLogs = pgTable("chat_logs", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(), 
+  userId: text("user_id").notNull(), 
   content: text("content").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
