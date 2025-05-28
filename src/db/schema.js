@@ -44,12 +44,7 @@ const lessonsRelations = relations(lessons, ({ one, many }) => ({
 // Challenges
 const challengesEnum = pgEnum("type", [
   "SELECT",
-  "ASSIST",
-  "LISTEN_TYPE",
-  "MATCH_IMAGE",
-  "REARRANGE",
-  "TRANSLATE",
-  "SPEAK",
+  "ASSIST"
 ]);
 
 const challenges = pgTable("challenges", {
@@ -121,7 +116,7 @@ const userProgress = pgTable("user_progress", {
   userName: text("user_name").notNull().default("User"),
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
   hearts: integer("hearts").notNull().default(5),
-  points: integer("points").notNull().default(0),
+  points: integer("points").notNull().default(100),
 });
 
 const userProgressRelations = relations(userProgress, () => ({}));
@@ -135,38 +130,6 @@ const userSubscription = pgTable("user_subscription", {
   stripePriceId: text("stripe_price_id").notNull(),
   stripeCurrentPeriodEnd: timestamp("stripe_current_period_end").notNull(),
 });
-
-// Conversations
-const conversations = pgTable("conversations", {
-  id: serial("id").primaryKey(),
-  userId: text("user_id").notNull(),
-});
-
-const conversationsRelations = relations(conversations, ({ many }) => ({
-  messages: many(messages),
-}));
-
-// Messages
-const senderEnum = pgEnum("sender", ["user", "chatbot"]);
-const messages = pgTable("messages", {
-  id: serial("id").primaryKey(),
-  conversationId: integer("conversation_id")
-    .references(() => conversations.id, {
-      onDelete: "cascade",
-    })
-    .notNull(),
-  sender: senderEnum("sender").notNull(),
-  audioSrc: text("audio_src"),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
-const messagesRelations = relations(messages, ({ one }) => ({
-  conversation: one(conversations, {
-    fields: [messages.conversationId],
-    references: [conversations.id],
-  }),
-}));
 
 
 
@@ -184,10 +147,5 @@ export {
   challengeProgressRelations,
   userProgress,
   userProgressRelations,
-  userSubscription,
-  conversations,
-  conversationsRelations,
-  messages,
-  messagesRelations,
-  senderEnum,
+  userSubscription
 };

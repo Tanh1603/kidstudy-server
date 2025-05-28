@@ -6,7 +6,6 @@ import {
   adminChallengeRouter,
   userChallengeRouter,
 } from "./ChallengeRouter.js";
-import conservationRouter from "./ConversationRouter.js";
 import { userProgressRouter } from "./UserProgressRouter.js";
 import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
 import multer from "multer";
@@ -30,10 +29,6 @@ userRouter.use("/challenges", userChallengeRouter);
 
 // challenge options
 adminRouter.use("/challenge-options", adminChallengeOptionsRouter);
-
-// conversations
-adminRouter.use("/conversations", conservationRouter);
-userRouter.use("/conversations", conservationRouter);
 
 // user progress
 adminRouter.use("/user-progress", userProgressRouter);
