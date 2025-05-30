@@ -1,6 +1,6 @@
 {
-  "id": "fb55852c-f18d-4bb5-a7d7-f51afa296f94",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "65477890-5e8e-4a28-89c9-146a0e10f0fb",
+  "prevId": "fb55852c-f18d-4bb5-a7d7-f51afa296f94",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -535,7 +535,8 @@
       "values": [
         "ANAGRAM",
         "MATCH_UP",
-        "MEMORY"
+        "MEMORY",
+        "SPELLING_BEE"
       ]
     },
     "public.memory_type": {

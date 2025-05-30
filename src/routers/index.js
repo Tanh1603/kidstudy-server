@@ -9,7 +9,8 @@ import {
 import { userProgressRouter } from "./UserProgressRouter.js";
 import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
 import multer from "multer";
-
+import { adminTopicRouter, userTopicRouter } from "./TopicRouter.js";
+import { adminMiniGameRouter } from "./MiniGameRouter.js";
 const upload = multer({ storage: multer.memoryStorage() });
 
 const userRouter = express.Router();
@@ -61,5 +62,14 @@ adminRouter.delete("/upload", async (req, res) => {
     return res.status(500).json({ message: error });
   }
 });
+
+// topics
+adminRouter.use("/topics", adminTopicRouter);
+userRouter.use("/topics", userTopicRouter);
+
+// minigames
+adminRouter.use("/mini-games", adminMiniGameRouter);
+userRouter.use("/mini-games", adminMiniGameRouter);
+
 
 export { adminRouter, userRouter };

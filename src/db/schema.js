@@ -42,10 +42,7 @@ const lessonsRelations = relations(lessons, ({ one, many }) => ({
 }));
 
 // Challenges
-const challengesEnum = pgEnum("type", [
-  "SELECT",
-  "ASSIST"
-]);
+const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
 
 const challenges = pgTable("challenges", {
   id: serial("id").primaryKey(),
@@ -131,7 +128,47 @@ const userSubscription = pgTable("user_subscription", {
   stripeCurrentPeriodEnd: timestamp("stripe_current_period_end").notNull(),
 });
 
+// Mini games
+const gameTypeEnum = pgEnum("game_type", ["ANAGRAM", "MATCH_UP", "MEMORY", "SPELLING_BEE"]);
+const difficultyEnum = pgEnum("difficulty", ["EASY", "MEDIUM", "HARD"]);
+const memoryTypeEnum = pgEnum("memory_type", [
+  "WORD_IMAGE",
+  "WORD_AUDIO",
+  "IMAGE_AUDIO",
+  "WORD_WORD",
+]);
 
+const topics = pgTable("topics", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  icon: text("icon"),
+});
+
+const topicsRelations = relations(topics, ({ many }) => ({
+  gameQuestions: many(gameQuestions),
+}));
+
+const gameQuestions = pgTable("game_questions", {
+  id: serial("id").primaryKey(),
+  gameType: gameTypeEnum("game_type").notNull(),
+  topicId: integer("topic_id")
+    .references(() => topics.id, { onDelete: "cascade" })
+    .notNull(),
+  difficulty: difficultyEnum("difficulty").notNull(),
+  memoryType: memoryTypeEnum("memory_type"),
+
+  word: text("word"), // dùng trong ANAGRAM, MATCH_UP, MEMORY
+  imageSrc: text("image_src"), // dùng cho MATCH_UP, MEMORY
+  audioSrc: text("audio_src"), // MEMORY
+  matchText: text("match_text"), // MATCH_UP hoặc MEMORY
+});
+
+const gameQuestionsRelations = relations(gameQuestions, ({ one }) => ({
+  topic: one(topics, {
+    fields: [gameQuestions.topicId],
+    references: [topics.id],
+  }),
+}));
 
 export {
   units,
@@ -147,5 +184,12 @@ export {
   challengeProgressRelations,
   userProgress,
   userProgressRelations,
-  userSubscription
+  userSubscription,
+  topics,
+  topicsRelations,
+  gameQuestions,
+  gameQuestionsRelations,
+  gameTypeEnum,
+  difficultyEnum,
+  memoryTypeEnum,
 };

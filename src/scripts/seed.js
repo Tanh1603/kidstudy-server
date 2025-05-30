@@ -44,6 +44,16 @@ const main = async () => {
           description: "Professional vocabulary and formal communication",
           order: 3,
         },
+        {
+          title: "Travel English",
+          description: "Essential vocabulary for traveling and tourism",
+          order: 4,
+        },
+        {
+          title: "Academic English",
+          description: "Advanced vocabulary for academic purposes",
+          order: 5,
+        },
       ])
       .returning();
 
@@ -282,6 +292,326 @@ const main = async () => {
           "https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_960_720.jpg",
         audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=happy",
       },
+
+      // UNIT 4: TRAVEL ENGLISH
+      // Lesson 1: Transportation
+      airport: {
+        vietnamese: "sân bay",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/adult-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=airport",
+      },
+      train: {
+        vietnamese: "tàu hỏa",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/train-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=train",
+      },
+      bus: {
+        vietnamese: "xe buýt",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/bus-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=bus",
+      },
+      taxi: {
+        vietnamese: "taxi",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/taxi-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=taxi",
+      },
+      subway: {
+        vietnamese: "tàu điện ngầm",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/subway-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=subway",
+      },
+
+      // Lesson 2: Accommodation
+      hotel: {
+        vietnamese: "khách sạn",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/hotel-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=hotel",
+      },
+      hostel: {
+        vietnamese: "nhà trọ",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/hostel-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=hostel",
+      },
+      reservation: {
+        vietnamese: "đặt phòng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/reservation-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=reservation",
+      },
+      checkin: {
+        vietnamese: "nhận phòng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/checkin-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=checkin",
+      },
+      checkout: {
+        vietnamese: "trả phòng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/checkout-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=checkout",
+      },
+
+      // UNIT 5: ACADEMIC ENGLISH
+      // Lesson 1: Research Terms
+      hypothesis: {
+        vietnamese: "giả thuyết",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/hypothesis-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=hypothesis",
+      },
+      methodology: {
+        vietnamese: "phương pháp luận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/methodology-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=methodology",
+      },
+      analysis: {
+        vietnamese: "phân tích",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/analysis-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=analysis",
+      },
+      conclusion: {
+        vietnamese: "kết luận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/conclusion-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=conclusion",
+      },
+      reference: {
+        vietnamese: "tài liệu tham khảo",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/reference-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=reference",
+      },
+
+      // UNIT 4: TRAVEL ENGLISH
+      // Lesson 3: Sightseeing
+      museum: {
+        vietnamese: "bảo tàng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/museum-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=museum",
+      },
+      gallery: {
+        vietnamese: "phòng trưng bày",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/gallery-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=gallery",
+      },
+      monument: {
+        vietnamese: "tượng đài",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/monument-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=monument",
+      },
+      park: {
+        vietnamese: "công viên",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/park-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=park",
+      },
+      beach: {
+        vietnamese: "bãi biển",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/beach-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=beach",
+      },
+
+      // Lesson 4: Dining Out
+      restaurant: {
+        vietnamese: "nhà hàng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/restaurant-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=restaurant",
+      },
+      cafe: {
+        vietnamese: "quán cà phê",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/cafe-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=cafe",
+      },
+      menu: {
+        vietnamese: "thực đơn",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/menu-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=menu",
+      },
+      bill: {
+        vietnamese: "hóa đơn",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/bill-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=bill",
+      },
+
+      // Lesson 5: Shopping
+      market: {
+        vietnamese: "chợ",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/market-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=market",
+      },
+      store: {
+        vietnamese: "cửa hàng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/store-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=store",
+      },
+      price: {
+        vietnamese: "giá",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/price-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=price",
+      },
+      discount: {
+        vietnamese: "giảm giá",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/discount-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=discount",
+      },
+      receipt: {
+        vietnamese: "biên lai",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/receipt-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=receipt",
+      },
+
+      // UNIT 5: ACADEMIC ENGLISH
+      // Lesson 2: Academic Writing
+      essay: {
+        vietnamese: "bài luận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/essay-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=essay",
+      },
+      thesis: {
+        vietnamese: "luận văn",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/thesis-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=thesis",
+      },
+      argument: {
+        vietnamese: "lập luận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/argument-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=argument",
+      },
+      evidence: {
+        vietnamese: "bằng chứng",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/evidence-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=evidence",
+      },
+      citation: {
+        vietnamese: "trích dẫn",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/citation-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=citation",
+      },
+
+      // Lesson 3: Study Skills
+      "note-taking": {
+        vietnamese: "ghi chú",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/note-taking-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=note-taking",
+      },
+      summarizing: {
+        vietnamese: "tóm tắt",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/summarizing-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=summarizing",
+      },
+      paraphrasing: {
+        vietnamese: "diễn giải",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/paraphrasing-1868750_960_720.jpg",
+        audio:
+          "https://audio.dict.cc/speak.audio.php?lang=en&text=paraphrasing",
+      },
+      memorizing: {
+        vietnamese: "ghi nhớ",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/memorizing-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=memorizing",
+      },
+      reviewing: {
+        vietnamese: "ôn tập",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/reviewing-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=reviewing",
+      },
+
+      // Lesson 4: Academic Presentations
+      presentation: {
+        vietnamese: "thuyết trình",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/presentation-1868750_960_720.jpg",
+        audio:
+          "https://audio.dict.cc/speak.audio.php?lang=en&text=presentation",
+      },
+      slide: {
+        vietnamese: "slide",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/slide-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=slide",
+      },
+      audience: {
+        vietnamese: "khán giả",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/audience-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=audience",
+      },
+      speaker: {
+        vietnamese: "người nói",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/speaker-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=speaker",
+      },
+      feedback: {
+        vietnamese: "phản hồi",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/feedback-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=feedback",
+      },
+
+      // Lesson 5: Academic Discussion
+      debate: {
+        vietnamese: "tranh luận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/debate-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=debate",
+      },
+      discussion: {
+        vietnamese: "thảo luận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/discussion-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=discussion",
+      },
+      opinion: {
+        vietnamese: "ý kiến",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/opinion-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=opinion",
+      },
+      perspective: {
+        vietnamese: "góc nhìn",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/perspective-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=perspective",
+      },
+      consensus: {
+        vietnamese: "sự đồng thuận",
+        image:
+          "https://cdn.pixabay.com/photo/2016/11/29/09/38/consensus-1868750_960_720.jpg",
+        audio: "https://audio.dict.cc/speak.audio.php?lang=en&text=consensus",
+      },
     };
 
     // Tạo các unit và lesson
@@ -443,13 +773,121 @@ const main = async () => {
       },
     ];
 
-    // Function to generate 10 challenges for a list of words
+    // UNIT 4: TRAVEL ENGLISH
+    const unit4Lessons = [
+      {
+        title: "Transportation",
+        challenges: generateChallenges([
+          "airport",
+          "train",
+          "bus",
+          "taxi",
+          "subway",
+        ]),
+      },
+      {
+        title: "Accommodation",
+        challenges: generateChallenges([
+          "hotel",
+          "hostel",
+          "reservation",
+          "checkin",
+          "checkout",
+        ]),
+      },
+      {
+        title: "Sightseeing",
+        challenges: generateChallenges([
+          "museum",
+          "gallery",
+          "monument",
+          "park",
+          "beach",
+        ]),
+      },
+      {
+        title: "Dining Out",
+        challenges: generateChallenges([
+          "restaurant",
+          "cafe",
+          "menu",
+          "reservation",
+          "bill",
+        ]),
+      },
+      {
+        title: "Shopping",
+        challenges: generateChallenges([
+          "market",
+          "store",
+          "price",
+          "discount",
+          "receipt",
+        ]),
+      },
+    ];
+
+    // UNIT 5: ACADEMIC ENGLISH
+    const unit5Lessons = [
+      {
+        title: "Research Terms",
+        challenges: generateChallenges([
+          "hypothesis",
+          "methodology",
+          "analysis",
+          "conclusion",
+          "reference",
+        ]),
+      },
+      {
+        title: "Academic Writing",
+        challenges: generateChallenges([
+          "essay",
+          "thesis",
+          "argument",
+          "evidence",
+          "citation",
+        ]),
+      },
+      {
+        title: "Study Skills",
+        challenges: generateChallenges([
+          "note-taking",
+          "summarizing",
+          "paraphrasing",
+          "memorizing",
+          "reviewing",
+        ]),
+      },
+      {
+        title: "Academic Presentations",
+        challenges: generateChallenges([
+          "presentation",
+          "slide",
+          "audience",
+          "speaker",
+          "feedback",
+        ]),
+      },
+      {
+        title: "Academic Discussion",
+        challenges: generateChallenges([
+          "debate",
+          "discussion",
+          "opinion",
+          "perspective",
+          "consensus",
+        ]),
+      },
+    ];
+
+    // Function to generate challenges for a list of words
     function generateChallenges(wordList) {
       const challenges = [];
       const types = ["SELECT", "ASSIST"];
       const directions = ["EN_TO_VI", "VI_TO_EN"];
 
-      // Mỗi từ trong danh sách sẽ tạo ra 2 challenge (1 SELECT, 1 ASSIST)
+      // Mỗi từ trong danh sách sẽ tạo ra 6 challenge (3 SELECT, 3 ASSIST)
       wordList.forEach((word, index) => {
         // Kiểm tra từ có trong từ điển không
         if (!vocabulary[word]) {
@@ -457,8 +895,8 @@ const main = async () => {
           return; // Skip this word
         }
 
-        for (let i = 0; i < 2; i++) {
-          const type = types[i];
+        for (let i = 0; i < 6; i++) {
+          const type = types[i % 2];
           const direction = directions[i % 2]; // Luân phiên hướng dịch
 
           if (type === "SELECT") {
@@ -490,8 +928,8 @@ const main = async () => {
         }
       });
 
-      // Đảm bảo có đúng 10 challenge cho mỗi lesson
-      return challenges.slice(0, 10);
+      // Đảm bảo có ít nhất 30 challenge cho mỗi lesson
+      return challenges.slice(0, 30);
     }
 
     // Lấy các lựa chọn ngẫu nhiên cho câu hỏi
@@ -869,6 +1307,8 @@ const main = async () => {
       { unit: units[0], lessons: unit1Lessons },
       { unit: units[1], lessons: unit2Lessons },
       { unit: units[2], lessons: unit3Lessons },
+      { unit: units[3], lessons: unit4Lessons },
+      { unit: units[4], lessons: unit5Lessons },
     ];
 
     // Process each unit, lesson, and challenge
