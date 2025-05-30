@@ -59,5 +59,5 @@ const db = drizzle(sql, {
   schema,
   logger: process.env.NODE_ENV === "development",
 });
-
+export { db, sql, schema };
 export default db;
