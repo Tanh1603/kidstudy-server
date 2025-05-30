@@ -61,4 +61,8 @@ const deleteFile = async (fileUrl) => {
   }
 };
 
-export { uploadFile, deleteFile };
+const isCloudinaryUrl = (url) => {
+  return /^https?:\/\/res\.cloudinary\.com\//.test(url);
+}
+
+export { uploadFile, deleteFile, isCloudinaryUrl };

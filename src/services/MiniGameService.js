@@ -2,15 +2,19 @@ import db from "../db/index.js";
 import * as schema from "../db/schema.js";
 import { eq, and } from "drizzle-orm";
 import { gameTypeEnum, memoryTypeEnum } from "../db/schema.js";
-import { deleteFile, uploadFile } from "../services/CloudinaryService.js";
-import { sql } from "drizzle-orm/sql";
+import {
+  deleteFile,
+  isCloudinaryUrl,
+  uploadFile,
+} from "../services/CloudinaryService.js";
+import { asc, sql } from "drizzle-orm/sql";
 
 const getRandomGameQuestions = async (gameType, difficulty, topicId, limit) => {
   const gameQuestions = await db.query.gameQuestions.findMany({
     where: and(
-      eq(gameQuestions.gameType, gameType),
-      eq(gameQuestions.difficulty, difficulty),
-      eq(gameQuestions.topicId, topicId)
+      eq(schema.gameQuestions.gameType, gameType),
+      eq(schema.gameQuestions.difficulty, difficulty),
+      eq(schema.gameQuestions.topicId, topicId)
     ),
     orderBy: sql`random()`,
     limit: limit,
@@ -27,6 +31,7 @@ const getGameQuestions = async (gameType) => {
   }
   const gameQuestions = await db.query.gameQuestions.findMany({
     where: and(eq(schema.gameQuestions.gameType, gameType)),
+    orderBy: [asc(schema.gameQuestions.id)],
   });
   return gameQuestions;
 };
@@ -82,8 +87,12 @@ const updateGameQuestion = async (request) => {
     let newImageSrc = existingGameQuestion.imageSrc;
     let newAudioSrc = existingGameQuestion.audioSrc;
 
-    const shouldDeleteImage = !!existingGameQuestion.imageSrc;
-    const shouldDeleteAudio = !!existingGameQuestion.audioSrc;
+    const shouldDeleteImage =
+      !!existingGameQuestion.imageSrc &&
+      isCloudinaryUrl(existingGameQuestion.imageSrc);
+    const shouldDeleteAudio =
+      !!existingGameQuestion.audioSrc &&
+      isCloudinaryUrl(existingGameQuestion.audioSrc);
 
     switch (existingGameQuestion.gameType) {
       case "MEMORY":

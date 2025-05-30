@@ -10,7 +10,7 @@ import { userProgressRouter } from "./UserProgressRouter.js";
 import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
 import multer from "multer";
 import { adminTopicRouter, userTopicRouter } from "./TopicRouter.js";
-import { adminMiniGameRouter } from "./MiniGameRouter.js";
+import { adminMiniGameRouter, userMiniGameRouter } from "./MiniGameRouter.js";
 const upload = multer({ storage: multer.memoryStorage() });
 
 const userRouter = express.Router();
@@ -69,7 +69,7 @@ userRouter.use("/topics", userTopicRouter);
 
 // minigames
 adminRouter.use("/mini-games", adminMiniGameRouter);
-userRouter.use("/mini-games", adminMiniGameRouter);
+userRouter.use("/mini-games", userMiniGameRouter);
 
 
 export { adminRouter, userRouter };

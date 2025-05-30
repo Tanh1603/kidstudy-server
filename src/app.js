@@ -14,7 +14,6 @@ import {
 } from "@clerk/express";
 import fixRouter from "./routers/FixRouter.js";
 
-
 import adminMiddleware from "./middlewares/AuthMiddleware.js";
 
 // Load environment variables
@@ -29,7 +28,7 @@ const app = express();
 
 // Middleware
 app.use(logger("dev"));
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

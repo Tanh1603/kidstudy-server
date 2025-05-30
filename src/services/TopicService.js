@@ -1,6 +1,6 @@
 import db from "../db/index.js";
 import * as schema from "../db/schema.js";
-import { deleteFile, uploadFile } from "./CloudinaryService.js";
+import { deleteFile, isCloudinaryUrl, uploadFile } from "./CloudinaryService.js";
 import { eq, asc } from "drizzle-orm";
 
 const getAllTopics = async () => {
@@ -35,7 +35,7 @@ const patchTopicIcon = async (id, icon) => {
     throw new Error("Topic not found");
   }
   // Check if the icon is already the same
-  if (existingTopic.icon) {
+  if (existingTopic.icon && isCloudinaryUrl(existingTopic.icon)) {
     await deleteFile(existingTopic.icon);
   }
   const url = await uploadFile(icon.buffer);
@@ -54,7 +54,7 @@ const deleteTopic = async (id) => {
   if (!existingTopic) {
     throw new Error("Topic not found");
   }
-  if (existingTopic.icon) {
+  if (existingTopic.icon && isCloudinaryUrl(existingTopic.icon)) {
     await deleteFile(existingTopic.icon);
   }
 
