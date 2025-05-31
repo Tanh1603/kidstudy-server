@@ -126,21 +126,20 @@ const updateGameQuestion = async (request) => {
           );
         } else if (memoryType === memoryTypeEnum.enumValues[2]) {
           // both
-          if (!imageFile || !audioFile) {
-            throw new Error(
-              "Both image and audio required for MEMORY (both) type."
+          if (imageFile) {
+            if (shouldDeleteImage)
+              task.push(deleteFile(existingGameQuestion.imageSrc));
+            task.push(
+              uploadFile(imageFile.buffer).then((res) => (newImageSrc = res))
             );
           }
-          if (shouldDeleteImage)
-            task.push(deleteFile(existingGameQuestion.imageSrc));
-          if (shouldDeleteAudio)
-            task.push(deleteFile(existingGameQuestion.audioSrc));
-          task.push(
-            uploadFile(imageFile.buffer).then((res) => (newImageSrc = res))
-          );
-          task.push(
-            uploadFile(audioFile.buffer).then((res) => (newAudioSrc = res))
-          );
+          if (audioFile) {
+            if (shouldDeleteAudio)
+              task.push(deleteFile(existingGameQuestion.audioSrc));
+            task.push(
+              uploadFile(audioFile.buffer).then((res) => (newAudioSrc = res))
+            );
+          }
         }
         break;
 
@@ -156,10 +155,6 @@ const updateGameQuestion = async (request) => {
         break;
 
       case "SPELLING_BEE":
-        if (!imageFile && !audioFile) {
-          throw new Error("At least one of image or audio must be provided.");
-        }
-
         if (imageFile) {
           if (shouldDeleteImage)
             task.push(deleteFile(existingGameQuestion.imageSrc));
