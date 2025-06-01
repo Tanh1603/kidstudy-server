@@ -100,6 +100,26 @@ const reduceHearts = async (challengeId, userId) => {
   };
 };
 
+const updatePoints = async (userId, points) => {
+  const userProgress = await db.query.userProgress.findFirst({
+    where: eq(schema.userProgress.userId, userId),
+  });
+
+  if (!userProgress) throw new Error("User progress not found.");
+  const currentPoints = Number(userProgress.points) || 0;
+  const addedPoints = Number(points) || 0;
+
+  const updatedUserProgress = await db
+    .update(schema.userProgress)
+    .set({
+      points: currentPoints + addedPoints,
+    })
+    .where(eq(schema.userProgress.userId, userId))
+    .returning();
+
+  return updatedUserProgress;
+}
+
 export {
   upsertUserProgress,
   getAllUserProgress,
@@ -107,4 +127,5 @@ export {
   getLeaderboard,
   reduceHearts,
   refillHearts,
+  updatePoints
 };

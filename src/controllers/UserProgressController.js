@@ -64,6 +64,20 @@ const refillHearts = async (req, res) => {
   }
 };
 
+const updateUserPoints = async (req, res) => {
+  try {
+    const { points } = req.body;
+    const { userId } = req.params;
+    const updatedProgress = await UserProgressService.updatePoints(
+      userId,
+      points
+    );
+    res.status(200).json(updatedProgress);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   upsertUserProgress,
   getAllUserProgress,
@@ -71,4 +85,5 @@ export {
   getLeaderboard,
   reduceHearts,
   refillHearts,
+  updateUserPoints,
 };
