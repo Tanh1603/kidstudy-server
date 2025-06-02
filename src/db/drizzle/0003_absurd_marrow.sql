@@ -1,0 +1,1 @@
+ALTER TABLE "quests" RENAME COLUMN "tartget_points" TO "target_points";

@@ -114,6 +114,7 @@ const userProgress = pgTable("user_progress", {
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
   hearts: integer("hearts").notNull().default(5),
   points: integer("points").notNull().default(100),
+  tickets: integer("tickets").notNull().default(0),
 });
 
 const userProgressRelations = relations(userProgress, () => ({}));
@@ -129,7 +130,12 @@ const userSubscription = pgTable("user_subscription", {
 });
 
 // Mini games
-const gameTypeEnum = pgEnum("game_type", ["ANAGRAM", "MATCH_UP", "MEMORY", "SPELLING_BEE"]);
+const gameTypeEnum = pgEnum("game_type", [
+  "ANAGRAM",
+  "MATCH_UP",
+  "MEMORY",
+  "SPELLING_BEE",
+]);
 const difficultyEnum = pgEnum("difficulty", ["EASY", "MEDIUM", "HARD"]);
 const memoryTypeEnum = pgEnum("memory_type", [
   "WORD_IMAGE",
@@ -170,6 +176,36 @@ const gameQuestionsRelations = relations(gameQuestions, ({ one }) => ({
   }),
 }));
 
+// quest
+const quests = pgTable("quests", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  reward: integer("reward").notNull(),
+  targetPoints: integer("target_points").notNull().default(0)
+});
+
+const questRelations = relations(quests, ({ many }) => ({
+  questUser: many(questUser),
+}));
+
+const questUser = pgTable("quest_user", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  questId: integer("quest_id")
+    .references(() => quests.id, { onDelete: "cascade" })
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  dailyPoints: integer("daily_point").default(0),
+  completed: boolean("completed").default(false),
+});
+
+const questUserRelation = relations(questUser, ({ one }) => ({
+  quest: one(quests, {
+    fields: [questUser.questId],
+    references: [quests.id],
+  }),
+}));
+
 export {
   units,
   unitsRelations,
@@ -192,4 +228,8 @@ export {
   gameTypeEnum,
   difficultyEnum,
   memoryTypeEnum,
+  quests,
+  questUser,
+  questRelations,
+  questUserRelation,
 };

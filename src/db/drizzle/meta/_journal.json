@@ -15,6 +15,20 @@
       "when": 1748576024201,
       "tag": "0001_smart_stature",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1748849270946,
+      "tag": "0002_fluffy_wild_pack",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1748849331409,
+      "tag": "0003_absurd_marrow",
+      "breakpoints": true
     }
   ]
 }

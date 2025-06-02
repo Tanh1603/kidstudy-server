@@ -11,6 +11,7 @@ import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
 import multer from "multer";
 import { adminTopicRouter, userTopicRouter } from "./TopicRouter.js";
 import { adminMiniGameRouter, userMiniGameRouter } from "./MiniGameRouter.js";
+import { adminQuestRouter, userQuestRouter } from "./QuestRouter.js";
 const upload = multer({ storage: multer.memoryStorage() });
 
 const userRouter = express.Router();
@@ -70,6 +71,9 @@ userRouter.use("/topics", userTopicRouter);
 // minigames
 adminRouter.use("/mini-games", adminMiniGameRouter);
 userRouter.use("/mini-games", userMiniGameRouter);
+
+adminRouter.use("/quests", adminQuestRouter)
+userRouter.use("/quests", userQuestRouter)
 
 
 export { adminRouter, userRouter };
