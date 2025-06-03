@@ -46,8 +46,8 @@ app.use(
   adminMiddleware,
   adminRouter
 );
-app.use("/api/v1/user", requireAuth({ signInUrl: "/error" }), userRouter);
-
+//app.use("/api/v1/user", requireAuth({ signInUrl: "/error" }), userRouter);
+app.use("/api/v1/user", userRouter);
 app.use("/fix", fixRouter);
 
 export default app;

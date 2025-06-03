@@ -119,16 +119,6 @@ const userProgress = pgTable("user_progress", {
 
 const userProgressRelations = relations(userProgress, () => ({}));
 
-// User Subscription
-const userSubscription = pgTable("user_subscription", {
-  id: serial("id").primaryKey(),
-  userId: text("user_id").notNull().unique(),
-  stripeCustomerId: text("stripe_customer_id").notNull().unique(),
-  stripeSubscriptionId: text("stripe_subscription_id").notNull().unique(),
-  stripePriceId: text("stripe_price_id").notNull(),
-  stripeCurrentPeriodEnd: timestamp("stripe_current_period_end").notNull(),
-});
-
 // Mini games
 const gameTypeEnum = pgEnum("game_type", [
   "ANAGRAM",
@@ -206,6 +196,22 @@ const questUserRelation = relations(questUser, ({ one }) => ({
   }),
 }));
 
+//Friend
+const friendRequestStatusEnum = pgEnum("status", ["pending", "accepted", "declined"]);
+const friendRequests = pgTable("friend_requests", {
+  id: serial("id").primaryKey(),
+  senderId: text("sender_id").notNull(),
+  receiverId: text("receiver_id").notNull(),
+  status: friendRequestStatusEnum("status").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+//Chat
+const chatLogs = pgTable("chat_logs", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(), 
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
 export {
   units,
   unitsRelations,
@@ -220,7 +226,6 @@ export {
   challengeProgressRelations,
   userProgress,
   userProgressRelations,
-  userSubscription,
   topics,
   topicsRelations,
   gameQuestions,
@@ -232,4 +237,7 @@ export {
   questUser,
   questRelations,
   questUserRelation,
+  friendRequests,
+  friendRequestStatusEnum,
+  chatLogs
 };
