@@ -16,7 +16,12 @@ const getUserProgressByUserId = async (userId) => {
   });
   return userProgress;
 };
-
+const getUserProgressByUserEmail = async (email) => {
+  const userProgress = await db.query.userProgress.findFirst({
+    where: eq(schema.userProgress.userEmail, email),
+  });
+  return userProgress;
+};
 const upsertUserProgress = async (userProgress) => {
   const { userId, ...updateFields } = userProgress;
 
@@ -104,6 +109,7 @@ export {
   upsertUserProgress,
   getAllUserProgress,
   getUserProgressByUserId,
+  getUserProgressByUserEmail,
   getLeaderboard,
   reduceHearts,
   refillHearts,
