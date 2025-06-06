@@ -31,6 +31,15 @@ const getUserProgressByUserId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+const getUserProgressByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const userProgress = await UserProgressService.getUserProgressByEmail(email); // 🔹 Cập nhật API service
+    res.status(200).json(userProgress);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const getLeaderboard = async (req, res) => {
   try {
@@ -68,6 +77,7 @@ export {
   upsertUserProgress,
   getAllUserProgress,
   getUserProgressByUserId,
+  getUserProgressByEmail,
   getLeaderboard,
   reduceHearts,
   refillHearts,

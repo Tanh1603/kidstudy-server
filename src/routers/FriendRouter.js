@@ -6,14 +6,14 @@ const friendRouter = express.Router();
 // ✅ Gửi lời mời kết bạn
 friendRouter.post("/send", async (req, res) => {
   try {
-    const { senderId, receiverId } = req.body;
-    if (!senderId || !receiverId) {
-      return res.status(400).json({ error: "Thiếu senderId hoặc receiverId." });
+    const { senderEmail, receiverEmail } = req.body;
+    if (!senderEmail || !receiverEmail) {
+      return res.status(400).json({ error: "Thiếu senderEmail hoặc receiverEmail." });
     }
 
     const result = await sql`
-      INSERT INTO friend_requests (sender_id, receiver_id, status)
-      VALUES (${senderId}, ${receiverId}, 'pending')
+      INSERT INTO friend_requests (sender_email, receiver_email, status)
+      VALUES (${senderEmail}, ${receiverEmail}, 'pending')
       RETURNING *;
     `;
 
@@ -69,13 +69,13 @@ friendRouter.post("/unfriend", async (req, res) => {
 });
 
 // 📋 Lấy danh sách bạn bè
-friendRouter.get("/:userId", async (req, res) => {
+friendRouter.get("/:userEmail", async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userEmail } = req.params;
     const friends = await sql`
-      SELECT sender_id FROM friend_requests WHERE receiver_id = ${userId} AND status = 'accepted'
+      SELECT sender_email FROM friend_requests WHERE receiver_email = ${userEmail} AND status = 'accepted'
       UNION
-      SELECT receiver_id FROM friend_requests WHERE sender_id = ${userId} AND status = 'accepted';
+      SELECT receiver_email FROM friend_requests WHERE sender_email = ${userEmail} AND status = 'accepted';
     `;
     res.json(friends);
   } catch (error) {
@@ -84,11 +84,11 @@ friendRouter.get("/:userId", async (req, res) => {
 });
 
 // 📩 Lấy danh sách lời mời kết bạn
-friendRouter.get("/requests/:userId", async (req, res) => {
+friendRouter.get("/requests/:userEmail", async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userEmail } = req.params;
     const requests = await sql`
-      SELECT id, sender_id FROM friend_requests WHERE receiver_id = ${userId} AND status = 'pending'
+      SELECT id, sender_email FROM friend_requests WHERE receiver_email = ${userEmail} AND status = 'pending'
     `;
     res.json(requests);
   } catch (error) {

@@ -3,6 +3,7 @@ import {
   upsertUserProgress,
   getAllUserProgress,
   getUserProgressByUserId,
+  getUserProgressByEmail,
   getLeaderboard,
   reduceHearts,
   refillHearts,
@@ -13,6 +14,7 @@ const userProgressRouter = express.Router();
 userProgressRouter.put("/upsert", upsertUserProgress);
 userProgressRouter.get("/leaderboard", getLeaderboard);
 userProgressRouter.get("/:userId", getUserProgressByUserId);
+userProgressRouter.get("/:email", getUserProgressByEmail);
 userProgressRouter.get("/", getAllUserProgress);
 userProgressRouter.put("/reduce-hearts", reduceHearts);
 userProgressRouter.put("/refill-hearts", refillHearts);

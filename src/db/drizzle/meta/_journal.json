@@ -8,6 +8,27 @@
       "when": 1748428320523,
       "tag": "0000_mature_nehzno",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1749205636029,
+      "tag": "0001_vengeful_venom",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1749206404365,
+      "tag": "0002_smart_shooting_star",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1749206630021,
+      "tag": "0003_old_firedrake",
+      "breakpoints": true
     }
   ]
 }
