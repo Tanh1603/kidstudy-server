@@ -96,4 +96,23 @@ friendRouter.get("/requests/:userEmail", async (req, res) => {
   }
 });
 
+friendRouter.put("/gift", async (req, res) => {
+  try {
+    const { senderEmail, receiverEmail } = req.body; 
+
+    await sql`
+      UPDATE user_progress 
+      SET hearts = hearts + 1
+      WHERE user_email = ${receiverEmail};`
+    await sql`
+      UPDATE user_progress 
+      SET hearts = hearts - 1 
+      WHERE user_email = ${senderEmail};
+    `
+    res.json({ message: "Tim đã được tặng thành công!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default friendRouter;
