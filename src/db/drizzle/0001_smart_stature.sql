@@ -1,1 +1,0 @@
-ALTER TYPE "public"."game_type" ADD VALUE 'SPELLING_BEE';

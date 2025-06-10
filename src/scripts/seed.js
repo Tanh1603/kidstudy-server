@@ -19,9 +19,6 @@ const main = async () => {
       `TRUNCATE TABLE "challenge_options" RESTART IDENTITY CASCADE`
     );
     await db.execute(
-      `TRUNCATE TABLE "user_subscription" RESTART IDENTITY CASCADE`
-    );
-    await db.execute(
       `TRUNCATE TABLE "challenge_progress" RESTART IDENTITY CASCADE`
     );
 

@@ -9,6 +9,9 @@ import {
 import { userProgressRouter } from "./UserProgressRouter.js";
 import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
 import multer from "multer";
+import friendRouter from "./FriendRouter.js";
+import evaluateText from "./Evaluate.js";
+
 import {db,sql} from "../db/index.js"
 import * as schema from "../db/schema.js"
 import {friendRequests} from "../db/schema.js"
@@ -38,6 +41,12 @@ adminRouter.use("/challenge-options", adminChallengeOptionsRouter);
 // user progress
 adminRouter.use("/user-progress", userProgressRouter);
 userRouter.use("/user-progress", userProgressRouter);
+
+//Friend
+userRouter.use("/friends", friendRouter);
+
+//Evaluate
+userRouter.use("/ai", evaluateText);
 
 adminRouter.post("/upload", upload.single("file"), async (req, res) => {
   try {

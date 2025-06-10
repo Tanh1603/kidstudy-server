@@ -31,7 +31,17 @@ const getUserProgressByUserId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
+const getUserProgressByUserEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const userProgress = await UserProgressService.getUserProgressByUserEmail(
+      email
+    );
+    res.status(200).json(userProgress);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 const getLeaderboard = async (req, res) => {
   try {
     const size = parseInt(req.query.size) || 10;
@@ -82,6 +92,7 @@ export {
   upsertUserProgress,
   getAllUserProgress,
   getUserProgressByUserId,
+  getUserProgressByUserEmail,
   getLeaderboard,
   reduceHearts,
   refillHearts,

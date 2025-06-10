@@ -111,6 +111,7 @@ const challengeProgressRelations = relations(challengeProgress, ({ one }) => ({
 const userProgress = pgTable("user_progress", {
   userId: text("user_id").primaryKey(),
   userName: text("user_name").notNull().default("User"),
+  userEmail: text("user_email").notNull().unique(),
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
   hearts: integer("hearts").notNull().default(5),
   points: integer("points").notNull().default(100),
@@ -197,21 +198,15 @@ const questUserRelation = relations(questUser, ({ one }) => ({
 }));
 
 //Friend
-const friendRequestStatusEnum = pgEnum("status", ["pending", "accepted", "declined"]);
 const friendRequests = pgTable("friend_requests", {
   id: serial("id").primaryKey(),
-  senderId: text("sender_id").notNull(),
-  receiverId: text("receiver_id").notNull(),
-  status: friendRequestStatusEnum("status").notNull(),
+  senderEmail: text("sender_email").notNull(),
+  receiverEmail: text("receiver_email").notNull(),
+  status: text("status").notNull(), // 🔹 Đổi từ ENUM sang TEXT
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
-//Chat
-const chatLogs = pgTable("chat_logs", {
-  id: serial("id").primaryKey(),
-  userId: text("user_id").notNull(), 
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+
+
 export {
   units,
   unitsRelations,
@@ -238,6 +233,4 @@ export {
   questRelations,
   questUserRelation,
   friendRequests,
-  friendRequestStatusEnum,
-  chatLogs
 };
