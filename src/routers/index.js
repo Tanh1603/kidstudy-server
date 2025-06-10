@@ -10,6 +10,8 @@ import { userProgressRouter } from "./UserProgressRouter.js";
 import { uploadFile, deleteFile } from "../services/CloudinaryService.js";
 import multer from "multer";
 import friendRouter from "./FriendRouter.js";
+import evaluateText from "./Evaluate.js";
+
 const upload = multer({ storage: multer.memoryStorage() });
 
 const userRouter = express.Router();
@@ -37,7 +39,8 @@ userRouter.use("/user-progress", userProgressRouter);
 //Friend
 userRouter.use("/friends", friendRouter);
 
-//Chat
+//Evaluate
+userRouter.use("/ai", evaluateText);
 
 adminRouter.post("/upload", upload.single("file"), async (req, res) => {
   try {
